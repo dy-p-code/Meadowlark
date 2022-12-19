@@ -8,7 +8,8 @@
 
 const portfinder = require('portfinder');
 const puppeteer = require('puppeteer');
-const app = (require = '../app.js');
+
+const app = require('../app.js');
 
 let server = null;
 let port = null;

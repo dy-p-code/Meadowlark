@@ -1,6 +1,6 @@
 // 홈페이지가 렌더링 되고 있는지에 대한 테스트코드
 
-const handler = require('../handler.js');
+const handler = require('../lib/handler.js');
 // 테스트할 코드인 라우터 핸들러를 임포트해서 가져옴
 
 test('home page render', () => {

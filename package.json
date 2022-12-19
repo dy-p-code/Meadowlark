@@ -10,11 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
-    "express-handlebars": "^3.1.0",
-    "puppeteer": "^18.1.0"
+    "express-handlebars": "^3.1.0"
   },
   "devDependencies": {
     "jest": "^25.5.4",
-    "portfinder": "^1.0.32"
+    "portfinder": "^1.0.32",
+    "puppeteer": "^18.2.1"
   }
 }

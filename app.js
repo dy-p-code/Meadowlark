@@ -1,7 +1,9 @@
 const express = require('express');
 const expressHandlebars = require('express-handlebars');
-// const handler = require('../handler.js');
+
+const handler = require('./lib/handler.js');
 const fortune = require('./lib/fortune.js');
+
 const app = express();
 
 // handlebar view engine setting
@@ -16,6 +18,11 @@ app.set('view engine', 'handlebars');
 app.use(express.static(__dirname + '/public'));
 
 const port = process.env.PORT || 3000;
+
+app.get('/', handler.home);
+app.get('/about', handler.about);
+app.use(handler.notFound);
+app.use(handler.serverError);
 
 // main page
 app.get('/', (req, res) => {
@@ -35,20 +42,12 @@ app.use((req, res) => {
   res.render('404-Not Found');
 });
 
-// custom 500 page
+// // custom 500 page
 app.use((err, req, res, next) => {
   console.error(err.message);
   res.status(500);
   res.render('500-Server Error');
 });
-
-// const fortuneCookies = [
-//   'Conquer your fears or they will conquer you.',
-//   'Rivers need springs.',
-//   "Do not fear what you don't know.",
-//   'You will have a pleasant surprise.',
-//   'Whenever possible, keep it simple.',
-// ];
 
 // app.listen(port, () =>
 //   console.log(`Express Started on http://localhost:${port}`)
