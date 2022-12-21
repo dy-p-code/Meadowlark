@@ -1,5 +1,7 @@
 const express = require('express');
 const expressHandlebars = require('express-handlebars');
+const weatherMiddleware = require('./lib/middleware/weather.js');
+const bodyParser = require('body-parser');
 
 const handler = require('./lib/handler.js');
 const fortune = require('./lib/fortune.js');
@@ -11,16 +13,26 @@ app.engine(
   'handlebars',
   expressHandlebars({
     defaultLayout: 'main',
+    helper: {
+      section: function (name, options) {
+        if (!this._section) this._section = {};
+        this._section[name] = options.fn(this);
+        return null;
+      },
+    },
   })
 );
 app.set('view engine', 'handlebars');
 
 app.use(express.static(__dirname + '/public'));
+app.use(weatherMiddleware);
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const port = process.env.PORT || 3000;
 
 app.get('/', handler.home);
 app.get('/about', handler.about);
+app.get('/section-test', handler.sectionTest);
 app.use(handler.notFound);
 app.use(handler.serverError);
 
