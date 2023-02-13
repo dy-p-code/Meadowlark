@@ -33,6 +33,10 @@ const port = process.env.PORT || 3000;
 app.get('/', handler.home);
 app.get('/about', handler.about);
 app.get('/section-test', handler.sectionTest);
+app.get('/newsletter-signup', handlers.newsletterSignup);
+app.get('/newsletter-signup/process', handlers.newsletterSignupProcess)
+app.get('/newsletter-signup/thank-you', handlers.newsletterSignupThankYou)
+
 app.use(handler.notFound);
 app.use(handler.serverError);
 
