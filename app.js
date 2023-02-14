@@ -27,6 +27,9 @@ app.set('view engine', 'handlebars');
 app.use(express.static(__dirname + '/public'));
 app.use(weatherMiddleware);
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+app.use(handler.notFound);
+app.use(handler.serverError);
 
 const port = process.env.PORT || 3000;
 
@@ -36,9 +39,8 @@ app.get('/section-test', handler.sectionTest);
 app.get('/newsletter-signup', handlers.newsletterSignup);
 app.get('/newsletter-signup/process', handlers.newsletterSignupProcess)
 app.get('/newsletter-signup/thank-you', handlers.newsletterSignupThankYou)
+app.get('/newsletter', handlers.newsletter)
 
-app.use(handler.notFound);
-app.use(handler.serverError);
 
 // main page
 app.get('/', (req, res) => {
@@ -58,12 +60,15 @@ app.use((req, res) => {
   res.render('404-Not Found');
 });
 
-// // custom 500 page
+// custom 500 page
 app.use((err, req, res, next) => {
   console.error(err.message);
   res.status(500);
   res.render('500-Server Error');
 });
+
+// JSON body
+app.post('/api/newsletter-signup', handlers.api.newsletterSighup)
 
 // app.listen(port, () =>
 //   console.log(`Express Started on http://localhost:${port}`)
