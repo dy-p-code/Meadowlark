@@ -1,10 +1,11 @@
 const express = require('express');
 const expressHandlebars = require('express-handlebars');
-const weatherMiddleware = require('./lib/middleware/weather.js');
 const bodyParser = require('body-parser');
+const multiparty = require('multiparty')
 
 const handler = require('./lib/handler.js');
 const fortune = require('./lib/fortune.js');
+const weatherMiddleware = require('./lib/middleware/weather.js');
 
 const app = express();
 
@@ -69,6 +70,15 @@ app.use((err, req, res, next) => {
 
 // JSON body
 app.post('/api/newsletter-signup', handlers.api.newsletterSighup)
+
+// photo upload
+app.post('/contest/vacation-photo/:year/:month', (req, res) => {
+  const form = new multiparty.Form()
+  form.parse(req, (err, fields, files) => {
+    if (err) return res.status(500).send({ error: err.message })
+    handlers.vacationPhotoContestProcess(req, res, fields, files)
+  })
+})
 
 // app.listen(port, () =>
 //   console.log(`Express Started on http://localhost:${port}`)
