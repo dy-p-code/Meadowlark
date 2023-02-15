@@ -6,6 +6,7 @@ const multiparty = require('multiparty')
 const handler = require('./lib/handler.js');
 const fortune = require('./lib/fortune.js');
 const weatherMiddleware = require('./lib/middleware/weather.js');
+const credentials = require('./.credentials.development.json');
 
 const app = express();
 
