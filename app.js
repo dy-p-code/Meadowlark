@@ -2,6 +2,7 @@ const express = require('express');
 const expressHandlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
 const multiparty = require('multiparty')
+const expressSession = require('express-session')
 
 const handler = require('./lib/handler.js');
 const fortune = require('./lib/fortune.js');
@@ -68,6 +69,13 @@ app.use((err, req, res, next) => {
   res.status(500);
   res.render('500-Server Error');
 });
+
+// express-session 연결
+app.use(expressSession({
+  resave: false,
+  saveUninitialized: false,
+  secret: credentials.cookieSecret
+}))
 
 // JSON body
 app.post('/api/newsletter-signup', handlers.api.newsletterSighup)
