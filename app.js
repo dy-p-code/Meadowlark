@@ -8,6 +8,7 @@ const handler = require('./lib/handler.js');
 const fortune = require('./lib/fortune.js');
 const weatherMiddleware = require('./lib/middleware/weather.js');
 const credentials = require('./.credentials.development.json');
+const flashMiddleware = require('./lib/middleware/flash')
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 app.use(handler.notFound);
 app.use(handler.serverError);
+app.use(flashMiddleware)
 
 const port = process.env.PORT || 3000;
 
